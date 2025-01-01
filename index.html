@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Date Invitation</title>
+    <!-- <link rel="stylesheet" href="yes.html"> -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #bba0a0eb;
+            color: #fefefe;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+        h1 {
+            color: #242324;
+        }
+        h3{
+            color: #242324;
+            font-size: 2rem;
+            padding: 0;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px;
+            position: relative; /* Relative positioning for absolute children */
+            width: 100%; /* Ensure the container takes the full width */
+            max-width: 600px; /* Maximum width of the container */
+            text-decoration: none;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            background-color: #4c577e;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #ffffff;
+        }
+        .button:active {
+            background-color: #ffffff;
+        }
+        .no-button {
+            position: absolute; /* Position absolute within the button container */
+            left: 150px; /* Start position */
+            transition: transform 0.1s ease; /* Smooth movement */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Would You Like to Go on a Date?</h1>
+        <h3>with Uday?</h3>
+        <div class="button-container">
+            <a href="yes.html" class="button">Yes!</a>
+            <button type="button" id="noButton" class="button no-button">No</button>
+        </div>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        const noButton = document.getElementById('noButton');
+        const buttonContainer = document.querySelector('.button-container');
+        let moveDistance = 84;
+        const moveAmount = 80; // Amount to move per interval
+        const intervalTime = 26; // Interval time in ms
+        let movingRight = true; // Direction flag
+
+        noButton.addEventListener('mouseover', function() {
+            const moveInterval = setInterval(() => {
+                // Get the width of the button and container
+                const buttonWidth = noButton.offsetWidth;
+                const containerWidth = buttonContainer.offsetWidth;
+
+                // Calculate the maximum allowed movement
+                const maxMove = containerWidth - buttonWidth;
+
+                // Adjust the movement direction
+                if (movingRight) {
+                    moveDistance += moveAmount;
+                    if (moveDistance >= maxMove) {
+                        moveDistance = maxMove;
+                        movingRight = false; // Change direction to left
+                    }
+                } else {
+                    moveDistance -= moveAmount;
+                    if (moveDistance <= 0) {
+                        moveDistance = 0;
+                        movingRight = true; // Change direction to right
+                    }
+                }
+
+                // Move button
+                noButton.style.transform = `translateX(${moveDistance}px)`;
+            }, intervalTime);
+
+            // Clear the interval when mouse leaves
+            noButton.addEventListener('mouseleave', () => {
+                clearInterval(moveInterval);
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
